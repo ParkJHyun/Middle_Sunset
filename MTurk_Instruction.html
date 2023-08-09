@@ -1,0 +1,126 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task successfully submit answers -->
+<crowd-form answer-format="flatten-objects">
+
+    <!-- The crowd-classifier element will create a tool for the Worker to select the 
+          correct answer to your question -->
+    <crowd-classifier 
+        categories="['5 - Excellent', '4.5 - Very Good', '4 - Good', '3.5 - Fairy Good', '3 - Fair', '2.5 - Below Fair', '2 - Poor', '1.5 - Bad','1 - Very Bad']"
+        header="assign scores based on the quality (intelligibility, quality, clarity) of the audio"
+        name="Voice Quality">
+        
+            <classification-target>
+                <audio controls="" style="width: 100%">
+
+                    <!-- Your audio file URLs will be substituted for the "audio_url" variable 
+                          when you publish a batch with a CSV input file containing multiple 
+                          audio file URLs -->
+                    <source src="${audio_url}" type="audio/mpeg" />
+
+                </audio>
+            </classification-target>
+
+        <!-- Use the short-instructions section for quick instructions that the Worker
+              will see while working on the task. Including some basic examples of 
+              good and bad answers here can help get good results. You can include 
+              any HTML here. -->
+        <short-instructions>             
+            <p>
+              In this survey, after you listen to each audio sample, you should choose a score for the quality (intelligibility, quality, clarity) of the audio.<br>
+              Your assessment should reflect your opinion of the overall quality of the audio sample.
+            </p>
+            <strong>Note:</strong> 1) Before you start the assessment, you have to read the full-instruction.<br>
+                  2) For better results, wear headphones and work in a quiet environment.
+            
+        </short-instructions>
+
+        <!-- Use the full-instructions section for more detailed instructions that the 
+              Worker can open while working on the task. Including more detailed 
+              instructions and additional examples of good and bad answers here can 
+              help get good results. You can include any HTML here. -->
+        <full-instructions>
+            <body>
+            <h1>Mean Opinion Score Tests</h1>
+            <pre>
+            Thank you for joining an our survey.<br>
+            Please read below <b>INSTRUCTION</b> carefully, then participate survey.<br>
+            <br>[INSTRUCTION]<br>
+            1. In this survey, after you listen to each audio sample, you should choose a score for the quality of audio.<br>
+            2. Your assement should reflect your opinion of the overall quality of the audio sample.<br>
+                - <b>The overall quality</b> includes the quality, clarity and intelligiblity of speech sound.<br>
+                - Do not assess lied on a certain standard, Considering overall standards is highly recommended.<br>
+                - This servey is an absolute evaluation.<br>
+                - Please listen to the entire audio file to the <b>end</b>.<br>
+            3. <b>IMPORTANT</b> We highly recommend to hear audios with <i>headphones</i> in the environments without background noise.<br>
+            4. The score is in a range from 1 to 5. For detailed description per score, check below a table.<br>
+            </pre>
+            <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;}
+            .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+              overflow:hidden;padding:10px 5px;word-break:normal;}
+            .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+              font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+            .tg .tg-baqh{text-align:center;vertical-align:top}
+            .tg .tg-ao2g{border-color:#333333;text-align:center;vertical-align:top}
+            .tg .tg-0lax{text-align:left;vertical-align:top}
+            .tg .tg-de2y{border-color:#333333;text-align:left;vertical-align:top}
+            </style>
+            <table class="tg">
+            <thead>
+              <tr>
+                <th class="tg-ao2g">SCORE</th>
+                <th class="tg-ao2g">Desc.</th>
+                <th class="tg-ao2g">Detailed Desc.</th>
+                <th class="tg-0lax">Reference</th>
+                <th class="tg-0lax"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tg-ao2g">5.0</td>
+                <td class="tg-ao2g">Excellent</td>
+                <td class="tg-de2y">Pronunciation is very clear. Any noise is not heard.</td>
+                <td class="tg-0lax"><audio src="https://github.com/ParkJHyun/Middle_Sunset/blob/main/wavs/samples/score_4_case.wav?raw=true" type="audio/wav" controls></audio></td>
+                <td class="tg-0lax"></td>
+              </tr>
+              <tr>
+                <td class="tg-ao2g">4.0</td>
+                <td class="tg-ao2g">Good</td>
+                <td class="tg-de2y"> It has little environment noise, but mostly natural speech. </td>
+                <td class="tg-baqh"><audio src="https://github.com/ParkJHyun/Middle_Sunset/blob/main/wavs/samples/score_3_case.wav?raw=true" type="audio/wav" controls></audio></td>
+                <td class="tg-0lax"></td>
+              </tr>
+              <tr>
+                <td class="tg-baqh">3.0</td>
+                <td class="tg-baqh">Fair</td>
+                <td class="tg-0lax">It has subtle degraded pronunciation. Sound quality of audio is generally fair.</td>
+                <td class="tg-baqh"><audio src="https://github.com/ParkJHyun/Middle_Sunset/blob/main/wavs/samples/score_2_case.wav?raw=true" type="audio/wav" controls></audio></td>
+                <td class="tg-baqh"></td>
+              </tr>
+              <tr>
+                <td class="tg-baqh">2.0</td>
+                <td class="tg-baqh">Poor</td>
+                <td class="tg-0lax">It has a lot of noise, distorted pronunciation. It could understand a meaning of speech.</td>
+                <td class="tg-baqh"><audio src="https://github.com/ParkJHyun/Middle_Sunset/blob/main/wavs/samples/score_1_case.wav?raw=true" type="audio/wav" controls></audio></td>
+                <td class="tg-baqh"></td>
+              </tr>
+              <tr>
+                <td class="tg-baqh">1.0</td>
+                <td class="tg-baqh">Bad</td>
+                <td class="tg-0lax">It is not audible sound. Completely non speech.</td>
+                <td class="tg-baqh">
+                  <audio src="https://github.com/ParkJHyun/Middle_Sunset/blob/main/wavs/samples/score_0_case.wav?raw=true" type="audio/wav" controls></audio></td>
+                <td class="tg-baqh"></td>
+              </tr>
+            </tbody>
+            </table>
+            </body>
+        </full-instructions> 
+
+    </crowd-classifier>
+</crowd-form>
